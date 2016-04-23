@@ -11,9 +11,11 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -25,6 +27,9 @@ public class presentacion extends javax.swing.JFrame {
     Condicion objCond = new Condicion();
 
     ArrayList<Hipotesis> listaDeHipotesis = new ArrayList();
+    
+    private DefaultListModel modeloReglas = new DefaultListModel();
+    private DefaultListModel modeloHechos = new DefaultListModel();
 
     /**
      * Creates new form presentacion
@@ -42,6 +47,7 @@ public class presentacion extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDialog1 = new javax.swing.JDialog();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         btnAbrirArchivo = new javax.swing.JButton();
@@ -53,12 +59,15 @@ public class presentacion extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         ListaCondiciones = new javax.swing.JList();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jList3 = new javax.swing.JList();
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        ListaReglasEjecutadas = new javax.swing.JList();
+        btn_comenzarInferencia = new javax.swing.JButton();
+        btn_nuevaInferencia = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        ListaBaseHechos = new javax.swing.JList();
+        jLabel4 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -68,8 +77,20 @@ public class presentacion extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
 
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(815, 540));
+        setMinimumSize(new java.awt.Dimension(1124, 540));
+        setPreferredSize(new java.awt.Dimension(1124, 540));
 
         jTabbedPane1.setMinimumSize(new java.awt.Dimension(815, 466));
         jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -98,7 +119,7 @@ public class presentacion extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addComponent(btnAbrirArchivo)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 646, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 955, Short.MAX_VALUE)
                 .addGap(30, 30, 30))
         );
         jPanel1Layout.setVerticalGroup(
@@ -124,17 +145,32 @@ public class presentacion extends javax.swing.JFrame {
 
         jScrollPane3.setViewportView(ListaCondiciones);
 
-        jScrollPane4.setViewportView(jList3);
+        jScrollPane4.setViewportView(ListaReglasEjecutadas);
 
-        jButton1.setText("Comenzar Inferencia");
+        btn_comenzarInferencia.setText("Comenzar Inferencia");
+        btn_comenzarInferencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_comenzarInferenciaActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Nueva Inferencia");
+        btn_nuevaInferencia.setText("Nueva Inferencia");
+        btn_nuevaInferencia.setEnabled(false);
+        btn_nuevaInferencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_nuevaInferenciaActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Escoja una Hipotesis");
 
-        jLabel2.setText("Bases de Hechos");
+        jLabel2.setText("Base de Hechos");
 
         jLabel3.setText("Reglas Ejecutadas");
+
+        jScrollPane5.setViewportView(ListaBaseHechos);
+
+        jLabel4.setText("Condiciones");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -143,31 +179,40 @@ public class presentacion extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(82, 82, 82)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(39, 39, 39)
+                                .addGap(40, 40, 40)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(106, 106, 106)
                                 .addComponent(jLabel1)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(63, 63, 63)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(59, 59, 59)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(133, 133, 133)
+                                .addComponent(jLabel4)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
-                                .addGap(57, 57, 57)))))
-                .addGap(48, 48, 48))
+                                .addGap(57, 57, 57)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(60, 60, 60)
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel3)
+                                .addGap(48, 48, 48))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(82, 82, 82)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btn_nuevaInferencia, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_comenzarInferencia, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,16 +221,18 @@ public class presentacion extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel4))
                 .addGap(11, 11, 11)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
                     .addComponent(jScrollPane3)
+                    .addComponent(jScrollPane5)
                     .addComponent(jScrollPane4))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(btn_comenzarInferencia)
                 .addGap(11, 11, 11)
-                .addComponent(jButton3)
+                .addComponent(btn_nuevaInferencia)
                 .addGap(21, 21, 21))
         );
 
@@ -195,7 +242,7 @@ public class presentacion extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 810, Short.MAX_VALUE)
+            .addGap(0, 1119, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,11 +285,6 @@ public class presentacion extends javax.swing.JFrame {
 
         jMenu3.setText("Acerca de");
         jMenu3.setMargin(new java.awt.Insets(0, 5, 0, 5));
-        jMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu3MouseClicked(evt);
-            }
-        });
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
@@ -388,7 +430,7 @@ public class presentacion extends javax.swing.JFrame {
                         if (objHip.getAtributo().equals(objCond.getAtributo()) && objHip.getValor().equals(objCond.getValor())) {
 
                             objCond.setHipotesis(true);
-                            System.out.println(objCond.getAtributo() + " = " + objCond.getValor());
+                            //System.out.println(objCond.getAtributo() + " = " + objCond.getValor());
                         }
 
                     }
@@ -421,8 +463,8 @@ public class presentacion extends javax.swing.JFrame {
 
     private void ListaHipotesisValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_ListaHipotesisValueChanged
         int n;
-        if(ListaHipotesis.getSelectedIndex() == -1){
-            n=0;
+        if (ListaHipotesis.getSelectedIndex() == -1) {
+            n = 0;
             ListaHipotesis.setSelectedIndex(0);
         }
 
@@ -439,10 +481,86 @@ public class presentacion extends javax.swing.JFrame {
         ListaCondiciones.setModel(modelo);
     }//GEN-LAST:event_ListaHipotesisValueChanged
 
-    private void jMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseClicked
-        System.out.println("aaa");
-    }//GEN-LAST:event_jMenu3MouseClicked
+    private void btn_comenzarInferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_comenzarInferenciaActionPerformed
+        try{
+        btn_comenzarInferencia.setEnabled(false);
 
+        Hipotesis aux = listaDeHipotesis.get(ListaHipotesis.getSelectedIndex());
+        
+        modeloReglas = new DefaultListModel();
+        modeloHechos = new DefaultListModel();
+        
+        verificarCondiciones(aux,1,1);
+        
+        ListaBaseHechos.setModel(modeloHechos);
+        ListaReglasEjecutadas.setModel(modeloReglas);
+        
+        btn_nuevaInferencia.setEnabled(true);
+        }
+        catch(Exception e){
+            System.out.println("Error: "+e);
+            btn_comenzarInferencia.setEnabled(true);
+            btn_nuevaInferencia.setEnabled(false);
+        }
+    }//GEN-LAST:event_btn_comenzarInferenciaActionPerformed
+
+    private void btn_nuevaInferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nuevaInferenciaActionPerformed
+        btn_nuevaInferencia.setEnabled(false);
+        btn_comenzarInferencia.setEnabled(true);
+        
+        ListaBaseHechos.setListData(new String[0]);
+        ListaReglasEjecutadas.setListData(new String[0]);
+    }//GEN-LAST:event_btn_nuevaInferenciaActionPerformed
+
+    private boolean verificarCondiciones(Hipotesis aux, int indexHec, int indexReg){
+        
+        boolean bandera = true; //En caso de que alguna condicion no se cumpla pasará a falso
+        int tempindex = indexReg - 1; 
+        modeloReglas.addElement(indexReg+". "+aux.getAtributo()+" = "+aux.getValor());
+
+        for (Condicion condicion : aux.getCondiciones()) {
+            
+            if(condicion.isHipotesis()){ //Si la condición es una hipotesis a su vez.
+                for (Hipotesis hip : listaDeHipotesis){
+                    if(hip.getAtributo().equals(condicion.getAtributo())){
+                        indexReg++;
+                        boolean temp = verificarCondiciones(hip,indexHec,indexReg);
+                        indexHec = indexHec + hip.getCondiciones().size();
+                        if(!temp){
+                            bandera = false;
+                        }
+                        break;
+                    }
+                }
+            }
+            else{
+                boolean flag = true; //Valida que no se ingresen numeros o texto vacio
+                while (flag) {
+                    String respuesta = JOptionPane.showInputDialog(this, "<html><b> Condición: </b>" + condicion.getAtributo() + "</html>" + "\n" + "<html><b>Descripción: </b>" + condicion.getDescripcion() + "</html>", "Inferencia hacia atrás", JOptionPane.INFORMATION_MESSAGE);
+                    if (respuesta.equals("")) {
+                        JOptionPane.showMessageDialog(this, "Ingrese un valor válido.", "Información", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        flag = false;
+                        if(!respuesta.equals(condicion.getValor())){
+                            bandera = false;
+                        }
+                        modeloHechos.addElement(indexHec+". "+condicion.getAtributo()+" = "+respuesta);
+                        indexHec++;
+                    }
+                } //Fin while
+            } //Fin else
+        } //Fin for
+        
+        System.out.println("El resultado es: "+bandera);
+        if(bandera){
+            modeloReglas.set(tempindex, modeloReglas.get(tempindex)+" \t(Cumple)");
+        }
+        else{
+            modeloReglas.set(tempindex, modeloReglas.get(tempindex)+" \t(No cumple)");
+        }
+        
+        return bandera; 
+    }
     /**
      * @param args the command line arguments
      */
@@ -480,27 +598,30 @@ public class presentacion extends javax.swing.JFrame {
     }
 
     private void tabInferencia() {
-       
-        DefaultListModel modelo = new DefaultListModel();
         
+        DefaultListModel modelo = new DefaultListModel();
+
         for (int i = 0; i < listaDeHipotesis.size(); i++) {
             modelo.addElement((i + 1) + ". " + listaDeHipotesis.get(i).getAtributo() + " = " + listaDeHipotesis.get(i).getValor());
         }
-        
+
         ListaHipotesis.setModel(modelo);
-       
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JList ListaBaseHechos;
     private javax.swing.JList ListaCondiciones;
     private javax.swing.JList ListaHipotesis;
+    private javax.swing.JList ListaReglasEjecutadas;
     private javax.swing.JButton btnAbrirArchivo;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btn_comenzarInferencia;
+    private javax.swing.JButton btn_nuevaInferencia;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JList jList3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -515,6 +636,7 @@ public class presentacion extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextArea txtArchivoCargado;
     // End of variables declaration//GEN-END:variables
