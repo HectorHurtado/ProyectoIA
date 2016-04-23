@@ -5,7 +5,15 @@
  */
 package Presentacion;
 
+import Logica.Condicion;
+import Logica.Hipotesis;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
+import javax.swing.JList;
 
 /**
  *
@@ -13,6 +21,15 @@ import javax.swing.JFileChooser;
  */
 public class presentacion extends javax.swing.JFrame {
 
+    
+    Hipotesis objHip = new Hipotesis();
+    Condicion objCond = new Condicion();
+   
+    ArrayList <Hipotesis> listaDeHipotesis= new ArrayList();
+    
+    
+    
+    
     /**
      * Creates new form presentacion
      */
@@ -31,14 +48,14 @@ public class presentacion extends javax.swing.JFrame {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        btnAbrirArchivo = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        txtArchivoCargado = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        ListaHipotesis = new javax.swing.JList();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList();
+        ListaCondiciones = new javax.swing.JList();
         jScrollPane4 = new javax.swing.JScrollPane();
         jList3 = new javax.swing.JList();
         jButton1 = new javax.swing.JButton();
@@ -56,16 +73,22 @@ public class presentacion extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton2.setText("Abrir Archivo");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+        jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabbedPane1MouseClicked(evt);
             }
         });
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
+        btnAbrirArchivo.setText("Abrir Archivo");
+        btnAbrirArchivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAbrirArchivoActionPerformed(evt);
+            }
+        });
+
+        txtArchivoCargado.setColumns(20);
+        txtArchivoCargado.setRows(5);
+        jScrollPane2.setViewportView(txtArchivoCargado);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -73,7 +96,7 @@ public class presentacion extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jButton2)
+                .addComponent(btnAbrirArchivo)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 646, Short.MAX_VALUE)
                 .addGap(30, 30, 30))
@@ -85,21 +108,21 @@ public class presentacion extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton2)
+                        .addComponent(btnAbrirArchivo)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
         jTabbedPane1.addTab("Abrir Archivo", jPanel1);
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { " ", " " };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
+        ListaHipotesis.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                ListaHipotesisValueChanged(evt);
+            }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(ListaHipotesis);
 
-        jScrollPane3.setViewportView(jList2);
+        jScrollPane3.setViewportView(ListaCondiciones);
 
         jScrollPane4.setViewportView(jList3);
 
@@ -121,9 +144,9 @@ public class presentacion extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(79, 79, 79)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -237,14 +260,211 @@ public class presentacion extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnAbrirArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirArchivoActionPerformed
+      
+      
+      ArrayList <Condicion> listaDeCondiciones= new ArrayList();
+      String file= null;
+      String linea1,linea2,linea3,Valor=null,Descripcion=null;
+      String AtributoCondicion=null,ValorCondicion=null;
+      String AtributoHipotesis=null,ValorHipotesis=null;
+      int i,j,k,m,contador=0;
+       
        JFileChooser dlg=new JFileChooser();
        int option=dlg.showOpenDialog(this);
        if(option==JFileChooser.APPROVE_OPTION)
+           
        {
-       String file =dlg.getSelectedFile().getPath();//me vota la ruta del archivo
-       }        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        file =dlg.getSelectedFile().getPath();//me vota la ruta del archivo
+       
+       }
+       
+       
+       try{
+           
+    
+        
+        FileReader f1;
+        BufferedReader entrada1;
+        
+          
+            f1= new FileReader(file);
+            entrada1= new BufferedReader(f1);
+            linea1 = entrada1.readLine();
+ 
+            while(linea1 != null)
+            {
+            
+                i=linea1.indexOf(";");
+                Hipotesis aux = new Hipotesis();
+                Condicion aux1 = new Condicion();
+               
+               
+                          
+                Valor= linea1.substring(0,i);
+                
+                 if(Valor.equals("Condicion"))
+                 {
+                     linea2=entrada1.readLine();
+                     
+                     k=linea2.indexOf("=");
+                     AtributoCondicion=linea2.substring(0,k);
+                     ValorCondicion = linea2.substring(k+1,linea2.length()-1);
+                     
+                     
+                     linea3=entrada1.readLine();
+                     m=linea3.indexOf(":");
+                     Descripcion = linea3.substring(m+1,linea3.length()-1);
+                     
+                     
+                     
+                      if(AtributoCondicion!= null && ValorCondicion != null)
+                     {
+                       contador=contador+1;
+                       this.txtArchivoCargado.setText(txtArchivoCargado.getText()+"Condicion "+contador+":\n" );
+                       this.txtArchivoCargado.setText(txtArchivoCargado.getText()+AtributoCondicion+" = " );
+                       this.txtArchivoCargado.setText(txtArchivoCargado.getText()+ValorCondicion+" \n" );
+                       this.txtArchivoCargado.setText(txtArchivoCargado.getText()+"Descripcion: "+Descripcion+" \n" );
+                       
+                       aux1.setNumero(contador);
+                       aux1.setAtributo(AtributoCondicion);
+                       aux1.setValor(ValorCondicion);
+                       aux1.setDescripcion(Descripcion);
+                       listaDeCondiciones.add(aux1);
+
+                     }
+                    
+                      
+               
+                    
+                 }
+                
+                 if(Valor.equals("Hipotesis"))
+                 {
+                     contador=0;
+                     linea2=entrada1.readLine();
+                     
+                     k=linea2.indexOf("=");
+                     AtributoHipotesis=linea2.substring(0,k);
+                     ValorHipotesis = linea2.substring(k+1,linea2.length()-1);
+                     
+                     linea3=entrada1.readLine();
+                     m=linea3.indexOf(":");
+                     Descripcion = linea3.substring(m+1,linea3.length()-1);
+                     
+                      if(AtributoHipotesis!= null && ValorHipotesis != null)
+                     {
+                       this.txtArchivoCargado.setText(txtArchivoCargado.getText()+"Hipotesis:\n" );
+                       this.txtArchivoCargado.setText(txtArchivoCargado.getText()+AtributoHipotesis+" = " );
+                       this.txtArchivoCargado.setText(txtArchivoCargado.getText()+ValorHipotesis+" \n" );
+                       this.txtArchivoCargado.setText(txtArchivoCargado.getText()+"Descripcion: "+Descripcion+" \n" );
+                       this.txtArchivoCargado.setText(txtArchivoCargado.getText()+"===================================== \n" );
+                      
+                       aux.setAtributo(AtributoHipotesis);
+                       aux.setValor(ValorHipotesis);
+                       aux.setDescripcion(Descripcion);
+                       aux.setCondiciones(listaDeCondiciones);
+                      
+                       
+                       listaDeHipotesis.add(aux);
+                        
+                     
+                     // listaDeCondiciones.clear(); 
+                       listaDeCondiciones= new ArrayList();
+                      
+                       
+                       
+                     }
+                     
+                 }
+                 
+              
+                 linea1=entrada1.readLine();
+                 
+                
+                
+                 
+             }
+            
+            int h=0;
+            
+            while(h<listaDeHipotesis.size())
+            {
+            
+             for(int v=0;v<listaDeHipotesis.size();v++)
+          {
+             objHip = listaDeHipotesis.get(h);
+             
+              for(int c=0;c<listaDeHipotesis.get(v).getCondiciones().size();c++)
+              {
+                
+               objCond = listaDeHipotesis.get(v).getCondiciones().get(c);
+                 
+                if(objHip.getAtributo().equals(objCond.getAtributo()) && objHip.getValor().equals(objCond.getValor()))
+                {
+                    
+                    objCond.setHipotesis(true);
+                    System.out.println(objCond.getAtributo() +" = " +objCond.getValor());
+                }
+    
+              }
+           }
+            h++;
+            }
+
+            
+       }  catch(IOException e1){
+            System.out.println(e1.toString());
+                    }
+       
+       
+      
+       
+               // TODO add your handling code here:
+    }//GEN-LAST:event_btnAbrirArchivoActionPerformed
+
+    private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
+        // TODO add your handling code here:
+        
+         DefaultListModel modelo = new DefaultListModel();
+        
+        
+        
+         for(int i=0;i<listaDeHipotesis.size();i++)
+        {
+            
+        modelo.addElement((i+1)+" "+listaDeHipotesis.get(i).getAtributo()+" = "+ listaDeHipotesis.get(i).getValor());
+        ListaHipotesis.setModel(modelo);
+     
+        }
+    }//GEN-LAST:event_jTabbedPane1MouseClicked
+
+    private void ListaHipotesisValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_ListaHipotesisValueChanged
+        // TODO add your handling code here:
+        
+        
+             
+        int n;
+        
+        DefaultListModel modelo = new DefaultListModel();
+        
+           n=ListaHipotesis.getSelectedIndex();
+        
+           for(int j=0;j<listaDeHipotesis.get(n).getCondiciones().size();j++)
+            {
+                 modelo.addElement(listaDeHipotesis.get(n).getCondiciones().get(j).getNumero()+" "
+                         +listaDeHipotesis.get(n).getCondiciones().get(j).getAtributo()+" = "
+                         + listaDeHipotesis.get(n).getCondiciones().get(j).getValor());
+                 
+                 
+                 ListaCondiciones.setModel(modelo);
+                 
+            }
+
+        
+     
+      
+    }//GEN-LAST:event_ListaHipotesisValueChanged
 
     /**
      * @param args the command line arguments
@@ -283,14 +503,14 @@ public class presentacion extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JList ListaCondiciones;
+    private javax.swing.JList ListaHipotesis;
+    private javax.swing.JButton btnAbrirArchivo;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JList jList1;
-    private javax.swing.JList jList2;
     private javax.swing.JList jList3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -306,6 +526,6 @@ public class presentacion extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JTextArea txtArchivoCargado;
     // End of variables declaration//GEN-END:variables
 }
