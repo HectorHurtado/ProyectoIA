@@ -21,15 +21,11 @@ import javax.swing.JList;
  */
 public class presentacion extends javax.swing.JFrame {
 
-    
     Hipotesis objHip = new Hipotesis();
     Condicion objCond = new Condicion();
-   
-    ArrayList <Hipotesis> listaDeHipotesis= new ArrayList();
-    
-    
-    
-    
+
+    ArrayList<Hipotesis> listaDeHipotesis = new ArrayList();
+
     /**
      * Creates new form presentacion
      */
@@ -70,12 +66,15 @@ public class presentacion extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(815, 540));
 
-        jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTabbedPane1MouseClicked(evt);
+        jTabbedPane1.setMinimumSize(new java.awt.Dimension(815, 466));
+        jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jTabbedPane1StateChanged(evt);
             }
         });
 
@@ -86,6 +85,7 @@ public class presentacion extends javax.swing.JFrame {
             }
         });
 
+        txtArchivoCargado.setEditable(false);
         txtArchivoCargado.setColumns(20);
         txtArchivoCargado.setRows(5);
         jScrollPane2.setViewportView(txtArchivoCargado);
@@ -106,10 +106,10 @@ public class presentacion extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnAbrirArchivo)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 380, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -141,46 +141,55 @@ public class presentacion extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(79, 79, 79)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(60, 60, 60)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(142, 142, 142)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(92, 92, 92))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(82, 82, 82)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(39, 39, 39)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(106, 106, 106)
+                                .addComponent(jLabel1)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(63, 63, 63)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(57, 57, 57)))))
+                .addGap(48, 48, 48))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addComponent(jButton1)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel1))
+                .addGap(11, 11, 11)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3)
+                    .addComponent(jScrollPane4))
                 .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addGap(11, 11, 11)
                 .addComponent(jButton3)
-                .addGap(36, 36, 36))
+                .addGap(21, 21, 21))
         );
 
-        jTabbedPane1.addTab("Inferir Hacia Atras", jPanel2);
+        jTabbedPane1.addTab("Inferir Hacia Atrás", jPanel2);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -193,9 +202,10 @@ public class presentacion extends javax.swing.JFrame {
             .addGap(0, 438, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Busqueda", jPanel3);
+        jTabbedPane1.addTab("Búsqueda", jPanel3);
 
         jMenu1.setText("Archivo");
+        jMenu1.setMargin(new java.awt.Insets(0, 5, 0, 5));
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem1.setText("Abrir");
@@ -213,6 +223,7 @@ public class presentacion extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Salir");
+        jMenu2.setMargin(new java.awt.Insets(0, 5, 0, 5));
 
         jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem3.setText("Salir");
@@ -225,22 +236,28 @@ public class presentacion extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
+        jMenu3.setText("Acerca de");
+        jMenu3.setMargin(new java.awt.Insets(0, 5, 0, 5));
+        jMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu3MouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu3);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane1)
-                .addContainerGap())
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -248,223 +265,183 @@ public class presentacion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-       JFileChooser dlg=new JFileChooser();
-       int option=dlg.showOpenDialog(this);
-       if(option==JFileChooser.APPROVE_OPTION)
-       {
-       String file =dlg.getSelectedFile().getPath();//me vota la ruta del archivo
-       }
+        JFileChooser dlg = new JFileChooser();
+        int option = dlg.showOpenDialog(this);
+        if (option == JFileChooser.APPROVE_OPTION) {
+            String file = dlg.getSelectedFile().getPath();//me vota la ruta del archivo
+        }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void btnAbrirArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirArchivoActionPerformed
-      
-      
-      ArrayList <Condicion> listaDeCondiciones= new ArrayList();
-      String file= null;
-      String linea1,linea2,linea3,Valor=null,Descripcion=null;
-      String AtributoCondicion=null,ValorCondicion=null;
-      String AtributoHipotesis=null,ValorHipotesis=null;
-      int i,j,k,m,contador=0;
-       
-       JFileChooser dlg=new JFileChooser();
-       int option=dlg.showOpenDialog(this);
-       if(option==JFileChooser.APPROVE_OPTION)
-           
-       {
-        file =dlg.getSelectedFile().getPath();//me vota la ruta del archivo
-       
-       }
-       
-       
-       try{
-           
-    
-        
-        FileReader f1;
-        BufferedReader entrada1;
-        
-          
-            f1= new FileReader(file);
-            entrada1= new BufferedReader(f1);
+
+        ArrayList<Condicion> listaDeCondiciones = new ArrayList();
+        String file = null;
+        String linea1, linea2, linea3, Valor = null, Descripcion = null;
+        String AtributoCondicion = null, ValorCondicion = null;
+        String AtributoHipotesis = null, ValorHipotesis = null;
+        int i, j, k, m, contador = 0;
+
+        JFileChooser dlg = new JFileChooser();
+        int option = dlg.showOpenDialog(this);
+        if (option == JFileChooser.APPROVE_OPTION) {
+            file = dlg.getSelectedFile().getPath();//me vota la ruta del archivo
+
+        }
+
+        try {
+
+            FileReader f1;
+            BufferedReader entrada1;
+
+            f1 = new FileReader(file);
+            entrada1 = new BufferedReader(f1);
             linea1 = entrada1.readLine();
- 
-            while(linea1 != null)
-            {
-            
-                i=linea1.indexOf(";");
+
+            while (linea1 != null) {
+
+                i = linea1.indexOf(";");
                 Hipotesis aux = new Hipotesis();
                 Condicion aux1 = new Condicion();
-               
-               
-                          
-                Valor= linea1.substring(0,i);
-                
-                 if(Valor.equals("Condicion"))
-                 {
-                     linea2=entrada1.readLine();
-                     
-                     k=linea2.indexOf("=");
-                     AtributoCondicion=linea2.substring(0,k);
-                     ValorCondicion = linea2.substring(k+1,linea2.length()-1);
-                     
-                     
-                     linea3=entrada1.readLine();
-                     m=linea3.indexOf(":");
-                     Descripcion = linea3.substring(m+1,linea3.length()-1);
-                     
-                     
-                     
-                      if(AtributoCondicion!= null && ValorCondicion != null)
-                     {
-                       contador=contador+1;
-                       this.txtArchivoCargado.setText(txtArchivoCargado.getText()+"Condicion "+contador+":\n" );
-                       this.txtArchivoCargado.setText(txtArchivoCargado.getText()+AtributoCondicion+" = " );
-                       this.txtArchivoCargado.setText(txtArchivoCargado.getText()+ValorCondicion+" \n" );
-                       this.txtArchivoCargado.setText(txtArchivoCargado.getText()+"Descripcion: "+Descripcion+" \n" );
-                       
-                       aux1.setNumero(contador);
-                       aux1.setAtributo(AtributoCondicion);
-                       aux1.setValor(ValorCondicion);
-                       aux1.setDescripcion(Descripcion);
-                       listaDeCondiciones.add(aux1);
 
-                     }
-                    
-                      
-               
-                    
-                 }
-                
-                 if(Valor.equals("Hipotesis"))
-                 {
-                     contador=0;
-                     linea2=entrada1.readLine();
-                     
-                     k=linea2.indexOf("=");
-                     AtributoHipotesis=linea2.substring(0,k);
-                     ValorHipotesis = linea2.substring(k+1,linea2.length()-1);
-                     
-                     linea3=entrada1.readLine();
-                     m=linea3.indexOf(":");
-                     Descripcion = linea3.substring(m+1,linea3.length()-1);
-                     
-                      if(AtributoHipotesis!= null && ValorHipotesis != null)
-                     {
-                       this.txtArchivoCargado.setText(txtArchivoCargado.getText()+"Hipotesis:\n" );
-                       this.txtArchivoCargado.setText(txtArchivoCargado.getText()+AtributoHipotesis+" = " );
-                       this.txtArchivoCargado.setText(txtArchivoCargado.getText()+ValorHipotesis+" \n" );
-                       this.txtArchivoCargado.setText(txtArchivoCargado.getText()+"Descripcion: "+Descripcion+" \n" );
-                       this.txtArchivoCargado.setText(txtArchivoCargado.getText()+"===================================== \n" );
-                      
-                       aux.setAtributo(AtributoHipotesis);
-                       aux.setValor(ValorHipotesis);
-                       aux.setDescripcion(Descripcion);
-                       aux.setCondiciones(listaDeCondiciones);
-                      
-                       
-                       listaDeHipotesis.add(aux);
-                        
-                     
-                     // listaDeCondiciones.clear(); 
-                       listaDeCondiciones= new ArrayList();
-                      
-                       
-                       
-                     }
-                     
-                 }
-                 
-              
-                 linea1=entrada1.readLine();
-                 
-                
-                
-                 
-             }
-            
-            int h=0;
-            
-            while(h<listaDeHipotesis.size())
-            {
-            
-             for(int v=0;v<listaDeHipotesis.size();v++)
-          {
-             objHip = listaDeHipotesis.get(h);
-             
-              for(int c=0;c<listaDeHipotesis.get(v).getCondiciones().size();c++)
-              {
-                
-               objCond = listaDeHipotesis.get(v).getCondiciones().get(c);
-                 
-                if(objHip.getAtributo().equals(objCond.getAtributo()) && objHip.getValor().equals(objCond.getValor()))
-                {
-                    
-                    objCond.setHipotesis(true);
-                    System.out.println(objCond.getAtributo() +" = " +objCond.getValor());
+                Valor = linea1.substring(0, i);
+
+                if (Valor.equals("Condicion")) {
+                    linea2 = entrada1.readLine();
+
+                    k = linea2.indexOf("=");
+                    AtributoCondicion = linea2.substring(0, k);
+                    ValorCondicion = linea2.substring(k + 1, linea2.length() - 1);
+
+                    linea3 = entrada1.readLine();
+                    m = linea3.indexOf(":");
+                    Descripcion = linea3.substring(m + 1, linea3.length() - 1);
+
+                    if (AtributoCondicion != null && ValorCondicion != null) {
+                        contador = contador + 1;
+                        this.txtArchivoCargado.setText(txtArchivoCargado.getText() + "Condicion " + contador + ":\n");
+                        this.txtArchivoCargado.setText(txtArchivoCargado.getText() + AtributoCondicion + " = ");
+                        this.txtArchivoCargado.setText(txtArchivoCargado.getText() + ValorCondicion + " \n");
+                        this.txtArchivoCargado.setText(txtArchivoCargado.getText() + "Descripcion: " + Descripcion + " \n");
+
+                        aux1.setNumero(contador);
+                        aux1.setAtributo(AtributoCondicion);
+                        aux1.setValor(ValorCondicion);
+                        aux1.setDescripcion(Descripcion);
+                        listaDeCondiciones.add(aux1);
+
+                    }
+
                 }
-    
-              }
-           }
-            h++;
+
+                if (Valor.equals("Hipotesis")) {
+                    contador = 0;
+                    linea2 = entrada1.readLine();
+
+                    k = linea2.indexOf("=");
+                    AtributoHipotesis = linea2.substring(0, k);
+                    ValorHipotesis = linea2.substring(k + 1, linea2.length() - 1);
+
+                    linea3 = entrada1.readLine();
+                    m = linea3.indexOf(":");
+                    Descripcion = linea3.substring(m + 1, linea3.length() - 1);
+
+                    if (AtributoHipotesis != null && ValorHipotesis != null) {
+                        this.txtArchivoCargado.setText(txtArchivoCargado.getText() + "Hipotesis:\n");
+                        this.txtArchivoCargado.setText(txtArchivoCargado.getText() + AtributoHipotesis + " = ");
+                        this.txtArchivoCargado.setText(txtArchivoCargado.getText() + ValorHipotesis + " \n");
+                        this.txtArchivoCargado.setText(txtArchivoCargado.getText() + "Descripcion: " + Descripcion + " \n");
+                        this.txtArchivoCargado.setText(txtArchivoCargado.getText() + "===================================== \n");
+
+                        aux.setAtributo(AtributoHipotesis);
+                        aux.setValor(ValorHipotesis);
+                        aux.setDescripcion(Descripcion);
+                        aux.setCondiciones(listaDeCondiciones);
+
+                        listaDeHipotesis.add(aux);
+
+                        // listaDeCondiciones.clear(); 
+                        listaDeCondiciones = new ArrayList();
+
+                    }
+
+                }
+
+                linea1 = entrada1.readLine();
+
             }
 
-            
-       }  catch(IOException e1){
-            System.out.println(e1.toString());
+            int h = 0;
+
+            while (h < listaDeHipotesis.size()) {
+
+                for (int v = 0; v < listaDeHipotesis.size(); v++) {
+                    objHip = listaDeHipotesis.get(h);
+
+                    for (int c = 0; c < listaDeHipotesis.get(v).getCondiciones().size(); c++) {
+
+                        objCond = listaDeHipotesis.get(v).getCondiciones().get(c);
+
+                        if (objHip.getAtributo().equals(objCond.getAtributo()) && objHip.getValor().equals(objCond.getValor())) {
+
+                            objCond.setHipotesis(true);
+                            System.out.println(objCond.getAtributo() + " = " + objCond.getValor());
+                        }
+
                     }
-       
-       
-      
-       
-               // TODO add your handling code here:
+                }
+                h++;
+            }
+
+        } catch (IOException e1) {
+            System.out.println(e1.toString());
+        }
+
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnAbrirArchivoActionPerformed
 
-    private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
-        // TODO add your handling code here:
-        
-         DefaultListModel modelo = new DefaultListModel();
-        
-        
-        
-         for(int i=0;i<listaDeHipotesis.size();i++)
-        {
-            
-        modelo.addElement((i+1)+" "+listaDeHipotesis.get(i).getAtributo()+" = "+ listaDeHipotesis.get(i).getValor());
-        ListaHipotesis.setModel(modelo);
-     
+    private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
+        //Control de las pestañas!
+        int tab = jTabbedPane1.getSelectedIndex();
+        switch (tab) {
+            case 0: //Pestaña: Abrir archivo
+
+                break;
+            case 1: //Pestaña: Inferencia hacia atras
+                tabInferencia();
+                break;
+            case 2://Pestaña: Busqueda
+
+                break;
         }
-    }//GEN-LAST:event_jTabbedPane1MouseClicked
+    }//GEN-LAST:event_jTabbedPane1StateChanged
 
     private void ListaHipotesisValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_ListaHipotesisValueChanged
-        // TODO add your handling code here:
-        
-        
-             
         int n;
-        
-        DefaultListModel modelo = new DefaultListModel();
-        
-           n=ListaHipotesis.getSelectedIndex();
-        
-           for(int j=0;j<listaDeHipotesis.get(n).getCondiciones().size();j++)
-            {
-                 modelo.addElement(listaDeHipotesis.get(n).getCondiciones().get(j).getNumero()+" "
-                         +listaDeHipotesis.get(n).getCondiciones().get(j).getAtributo()+" = "
-                         + listaDeHipotesis.get(n).getCondiciones().get(j).getValor());
-                 
-                 
-                 ListaCondiciones.setModel(modelo);
-                 
-            }
+        if(ListaHipotesis.getSelectedIndex() == -1){
+            n=0;
+            ListaHipotesis.setSelectedIndex(0);
+        }
 
-        
-     
-      
+        n = ListaHipotesis.getSelectedIndex();
+        DefaultListModel modelo = new DefaultListModel();
+
+        for (int j = 0; j < listaDeHipotesis.get(n).getCondiciones().size(); j++) {
+            modelo.addElement(listaDeHipotesis.get(n).getCondiciones().get(j).getNumero() + ". "
+                + listaDeHipotesis.get(n).getCondiciones().get(j).getAtributo() + " = "
+                + listaDeHipotesis.get(n).getCondiciones().get(j).getValor());
+
+        }
+
+        ListaCondiciones.setModel(modelo);
     }//GEN-LAST:event_ListaHipotesisValueChanged
+
+    private void jMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseClicked
+        System.out.println("aaa");
+    }//GEN-LAST:event_jMenu3MouseClicked
 
     /**
      * @param args the command line arguments
@@ -502,6 +479,18 @@ public class presentacion extends javax.swing.JFrame {
         });
     }
 
+    private void tabInferencia() {
+       
+        DefaultListModel modelo = new DefaultListModel();
+        
+        for (int i = 0; i < listaDeHipotesis.size(); i++) {
+            modelo.addElement((i + 1) + ". " + listaDeHipotesis.get(i).getAtributo() + " = " + listaDeHipotesis.get(i).getValor());
+        }
+        
+        ListaHipotesis.setModel(modelo);
+       
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList ListaCondiciones;
     private javax.swing.JList ListaHipotesis;
@@ -514,6 +503,7 @@ public class presentacion extends javax.swing.JFrame {
     private javax.swing.JList jList3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
