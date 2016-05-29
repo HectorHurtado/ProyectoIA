@@ -25,6 +25,7 @@ public class presentacion extends javax.swing.JFrame {
 
     Hipotesis objHip = new Hipotesis();
     Condicion objCond = new Condicion();
+    int n=1;
 
     ArrayList<Hipotesis> listaDeHipotesis = new ArrayList();
     
@@ -69,6 +70,8 @@ public class presentacion extends javax.swing.JFrame {
         ListaBaseHechos = new javax.swing.JList();
         jLabel4 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jTAreaProcedimiento = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -90,7 +93,6 @@ public class presentacion extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1124, 540));
-        setPreferredSize(new java.awt.Dimension(1124, 540));
 
         jTabbedPane1.setMinimumSize(new java.awt.Dimension(815, 466));
         jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -238,18 +240,29 @@ public class presentacion extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Inferir Hacia Atrás", jPanel2);
 
+        jTAreaProcedimiento.setEditable(false);
+        jTAreaProcedimiento.setColumns(20);
+        jTAreaProcedimiento.setRows(5);
+        jScrollPane6.setViewportView(jTAreaProcedimiento);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1119, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(527, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 438, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Búsqueda", jPanel3);
+        jTabbedPane1.addTab("Procedimiento", jPanel3);
 
         jMenu1.setText("Archivo");
         jMenu1.setMargin(new java.awt.Insets(0, 5, 0, 5));
@@ -486,6 +499,9 @@ public class presentacion extends javax.swing.JFrame {
         btn_comenzarInferencia.setEnabled(false);
 
         Hipotesis aux = listaDeHipotesis.get(ListaHipotesis.getSelectedIndex());
+        String texto=jTAreaProcedimiento.getText()+n+"- La hipostesis es: "+aux.getAtributo()+"="+aux.getValor();
+        jTAreaProcedimiento.setText(texto);
+        n++;
         
         modeloReglas = new DefaultListModel();
         modeloHechos = new DefaultListModel();
@@ -507,7 +523,8 @@ public class presentacion extends javax.swing.JFrame {
     private void btn_nuevaInferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nuevaInferenciaActionPerformed
         btn_nuevaInferencia.setEnabled(false);
         btn_comenzarInferencia.setEnabled(true);
-        
+        jTAreaProcedimiento.setText("");
+        n=1;
         ListaBaseHechos.setListData(new String[0]);
         ListaReglasEjecutadas.setListData(new String[0]);
     }//GEN-LAST:event_btn_nuevaInferenciaActionPerformed
@@ -524,6 +541,9 @@ public class presentacion extends javax.swing.JFrame {
                 for (Hipotesis hip : listaDeHipotesis){
                     if(hip.getAtributo().equals(condicion.getAtributo())){
                         indexReg++;
+                        String texto=jTAreaProcedimiento.getText()+"\n"+n+"- Esta condicion es a su vez hipotesis, verifico que se cumpla: "+hip.getAtributo()+"="+hip.getValor();
+                        jTAreaProcedimiento.setText(texto);
+                        n++;
                         boolean temp = verificarCondiciones(hip,indexHec,indexReg);
                         indexHec = indexHec + hip.getCondiciones().size();
                         if(!temp){
@@ -537,12 +557,23 @@ public class presentacion extends javax.swing.JFrame {
                 boolean flag = true; //Valida que no se ingresen numeros o texto vacio
                 while (flag) {
                     String respuesta = JOptionPane.showInputDialog(this, "<html><b> Condición: </b>" + condicion.getAtributo() + "</html>" + "\n" + "<html><b>Descripción: </b>" + condicion.getDescripcion() + "</html>", "Inferencia hacia atrás", JOptionPane.INFORMATION_MESSAGE);
+                    String texto2=jTAreaProcedimiento.getText()+"\n"+n+"- Verifico la condicion : "+condicion.getAtributo()+"="+condicion.getValor();
+                    jTAreaProcedimiento.setText(texto2);
+                    n++;
                     if (respuesta.equals("")) {
                         JOptionPane.showMessageDialog(this, "Ingrese un valor válido.", "Información", JOptionPane.ERROR_MESSAGE);
                     } else {
                         flag = false;
                         if(!respuesta.equals(condicion.getValor())){
                             bandera = false;
+                            String texto3=jTAreaProcedimiento.getText()+"\n"+n+"- La condicion : "+condicion.getAtributo()+"="+condicion.getValor()+" no se cumple";
+                            jTAreaProcedimiento.setText(texto3);
+                            n++;
+                        }
+                        else{
+                            String texto3=jTAreaProcedimiento.getText()+"\n"+n+"- La condicion : "+condicion.getAtributo()+"="+condicion.getValor()+" se cumple";
+                            jTAreaProcedimiento.setText(texto3);
+                            n++;                        
                         }
                         modeloHechos.addElement(indexHec+". "+condicion.getAtributo()+" = "+respuesta);
                         indexHec++;
@@ -554,9 +585,15 @@ public class presentacion extends javax.swing.JFrame {
         System.out.println("El resultado es: "+bandera);
         if(bandera){
             modeloReglas.set(tempindex, modeloReglas.get(tempindex)+" \t(Cumple)");
+            String texto=jTAreaProcedimiento.getText()+"\n"+n+"- La hiposetis "+aux.getAtributo()+"="+aux.getValor()+" se cumple";
+            jTAreaProcedimiento.setText(texto);
+            n++;
         }
         else{
             modeloReglas.set(tempindex, modeloReglas.get(tempindex)+" \t(No cumple)");
+            String texto=jTAreaProcedimiento.getText()+"\n"+n+"- La hiposetis "+aux.getAtributo()+"="+aux.getValor()+" no se cumple";
+            jTAreaProcedimiento.setText(texto);
+            n++;
         }
         
         return bandera; 
@@ -586,6 +623,8 @@ public class presentacion extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(presentacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
@@ -637,6 +676,8 @@ public class presentacion extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JTextArea jTAreaProcedimiento;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextArea txtArchivoCargado;
     // End of variables declaration//GEN-END:variables
