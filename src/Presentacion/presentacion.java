@@ -75,10 +75,8 @@ public class presentacion extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -92,6 +90,7 @@ public class presentacion extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Inferencia hacia atras");
         setMinimumSize(new java.awt.Dimension(1124, 540));
 
         jTabbedPane1.setMinimumSize(new java.awt.Dimension(815, 466));
@@ -276,10 +275,6 @@ public class presentacion extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem2.setText("Inferir hacia atras");
-        jMenu1.add(jMenuItem2);
-
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Salir");
@@ -295,10 +290,6 @@ public class presentacion extends javax.swing.JFrame {
         jMenu2.add(jMenuItem3);
 
         jMenuBar1.add(jMenu2);
-
-        jMenu3.setText("Acerca de");
-        jMenu3.setMargin(new java.awt.Insets(0, 5, 0, 5));
-        jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
 
@@ -320,10 +311,126 @@ public class presentacion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+       ArrayList<Condicion> listaDeCondiciones = new ArrayList();
+        String file = null;
+        String linea1, linea2, linea3, Valor = null, Descripcion = null;
+        String AtributoCondicion = null, ValorCondicion = null;
+        String AtributoHipotesis = null, ValorHipotesis = null;
+        int i, j, k, m, contador = 0;
+
         JFileChooser dlg = new JFileChooser();
         int option = dlg.showOpenDialog(this);
         if (option == JFileChooser.APPROVE_OPTION) {
-            String file = dlg.getSelectedFile().getPath();//me vota la ruta del archivo
+            file = dlg.getSelectedFile().getPath();//me vota la ruta del archivo
+
+        }
+
+        try {
+
+            FileReader f1;
+            BufferedReader entrada1;
+
+            f1 = new FileReader(file);
+            entrada1 = new BufferedReader(f1);
+            linea1 = entrada1.readLine();
+
+            while (linea1 != null) {
+
+                i = linea1.indexOf(";");
+                Hipotesis aux = new Hipotesis();
+                Condicion aux1 = new Condicion();
+
+                Valor = linea1.substring(0, i);
+
+                if (Valor.equals("Condicion")) {
+                    linea2 = entrada1.readLine();
+
+                    k = linea2.indexOf("=");
+                    AtributoCondicion = linea2.substring(0, k);
+                    ValorCondicion = linea2.substring(k + 1, linea2.length() - 1);
+
+                    linea3 = entrada1.readLine();
+                    m = linea3.indexOf(":");
+                    Descripcion = linea3.substring(m + 1, linea3.length() - 1);
+
+                    if (AtributoCondicion != null && ValorCondicion != null) {
+                        contador = contador + 1;
+                        this.txtArchivoCargado.setText(txtArchivoCargado.getText() + "Condicion " + contador + ":\n");
+                        this.txtArchivoCargado.setText(txtArchivoCargado.getText() + AtributoCondicion + " = ");
+                        this.txtArchivoCargado.setText(txtArchivoCargado.getText() + ValorCondicion + " \n");
+                        this.txtArchivoCargado.setText(txtArchivoCargado.getText() + "Descripcion: " + Descripcion + " \n");
+
+                        aux1.setNumero(contador);
+                        aux1.setAtributo(AtributoCondicion);
+                        aux1.setValor(ValorCondicion);
+                        aux1.setDescripcion(Descripcion);
+                        listaDeCondiciones.add(aux1);
+
+                    }
+
+                }
+
+                if (Valor.equals("Hipotesis")) {
+                    contador = 0;
+                    linea2 = entrada1.readLine();
+
+                    k = linea2.indexOf("=");
+                    AtributoHipotesis = linea2.substring(0, k);
+                    ValorHipotesis = linea2.substring(k + 1, linea2.length() - 1);
+
+                    linea3 = entrada1.readLine();
+                    m = linea3.indexOf(":");
+                    Descripcion = linea3.substring(m + 1, linea3.length() - 1);
+
+                    if (AtributoHipotesis != null && ValorHipotesis != null) {
+                        this.txtArchivoCargado.setText(txtArchivoCargado.getText() + "Hipotesis:\n");
+                        this.txtArchivoCargado.setText(txtArchivoCargado.getText() + AtributoHipotesis + " = ");
+                        this.txtArchivoCargado.setText(txtArchivoCargado.getText() + ValorHipotesis + " \n");
+                        this.txtArchivoCargado.setText(txtArchivoCargado.getText() + "Descripcion: " + Descripcion + " \n");
+                        this.txtArchivoCargado.setText(txtArchivoCargado.getText() + "===================================== \n");
+
+                        aux.setAtributo(AtributoHipotesis);
+                        aux.setValor(ValorHipotesis);
+                        aux.setDescripcion(Descripcion);
+                        aux.setCondiciones(listaDeCondiciones);
+
+                        listaDeHipotesis.add(aux);
+
+                        // listaDeCondiciones.clear(); 
+                        listaDeCondiciones = new ArrayList();
+
+                    }
+
+                }
+
+                linea1 = entrada1.readLine();
+
+            }
+
+            int h = 0;
+
+            while (h < listaDeHipotesis.size()) {
+
+                for (int v = 0; v < listaDeHipotesis.size(); v++) {
+                    objHip = listaDeHipotesis.get(h);
+
+                    for (int c = 0; c < listaDeHipotesis.get(v).getCondiciones().size(); c++) {
+
+                        objCond = listaDeHipotesis.get(v).getCondiciones().get(c);
+
+                        if (objHip.getAtributo().equals(objCond.getAtributo()) && objHip.getValor().equals(objCond.getValor())) {
+
+                            objCond.setHipotesis(true);
+                            //System.out.println(objCond.getAtributo() + " = " + objCond.getValor());
+                        }
+
+                    }
+                }
+                h++;
+            }
+
+        } catch (IOException e1) {
+            System.out.println(e1.toString());
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -663,10 +770,8 @@ public class presentacion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
